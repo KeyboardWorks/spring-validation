@@ -5,11 +5,13 @@ import javax.validation.constraints.Size;
 
 import keyboard.works.entity.validation.group.CreateData;
 import keyboard.works.entity.validation.group.UpdateData;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class UserRequest {
 
 	@NotBlank(message = "Name is mandatory !", groups = {CreateData.class, UpdateData.class})

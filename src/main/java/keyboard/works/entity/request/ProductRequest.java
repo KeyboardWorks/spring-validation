@@ -7,15 +7,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import keyboard.works.entity.validation.annotation.ProductCodeMustUnique;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class ProductRequest {
 
-	@ProductCodeMustUnique
+//	@ProductCodeMustUnique
 	@NotBlank(message = "Code is mandatory")
 	@Size(min = 5, message = "Product code length must greather than 5")
 	private String code;
