@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(String id, UserRequest userRequest) {
 		
-		User user = userRepository.findById(id).orElseThrow(RuntimeException::new);
+		User user = getUser(id);
 		
 		BeanUtils.copyProperties(userRequest, user, "password");
 		
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(String id) {
 		
-		User user = userRepository.findById(id).orElseThrow(RuntimeException::new);
+		User user = getUser(id);
 		
 		userRepository.delete(user);
 	}
