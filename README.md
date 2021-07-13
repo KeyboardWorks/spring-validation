@@ -113,7 +113,7 @@ public class ProductCodeMustUniqueValidator implements ConstraintValidator<Produ
 
 ## Create Annotation
 
-After we create the validator class, we need to create annotation class which will be tagged the field that want to validate.
+After we create the validator class, we need to create annotation class which will be tagged the field that we want to validate.
 In annotation class we must add @Constraint to tell the validator, that this annotation has to be validated.
 ValidatedBy field is used by validator to validate the value.
 
@@ -132,7 +132,7 @@ public @interface ProductCodeMustUnique {
 
 }
 ```
-After that we can add this annotation to field who want to validate.
+After that we can add this annotation to field what want to be validated.
 
 ```java
 	@ProductCodeMustUnique
@@ -157,7 +157,7 @@ public interface UpdateData {
 }
 ```
 
-Second add interface classes to javax annotation do you want to grouping.
+Second add interface classes to javax annotation that you want to group.
 
 Example:
 ```java
@@ -248,4 +248,4 @@ public GenericResponse<Object> handlerConstraintViolationException(ConstraintVio
 
 ```
 
-@ResponseStatus annotation used for give a specific HttpStatus to the response. @ExceptionHandler annotation used for catch a specific exeption class.
+@ResponseStatus annotation is used for giving a specific HttpStatus to the response. @ExceptionHandler annotation is used for catching a specific exception class.
