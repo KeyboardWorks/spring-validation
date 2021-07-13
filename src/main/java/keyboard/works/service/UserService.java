@@ -2,13 +2,13 @@ package keyboard.works.service;
 
 import java.util.List;
 
-import keyboard.works.entity.User;
+import keyboard.works.entity.response.UserResponse;
 
 public interface UserService extends UserServiceCreate, UserServiceUpdate {
 
-	List<User> getUsers();
+	List<UserResponse> getUsers();
 	
-	User getUser(String id);
+	UserResponse getUser(String id);
 	
 	void deleteUser(String id);
 	

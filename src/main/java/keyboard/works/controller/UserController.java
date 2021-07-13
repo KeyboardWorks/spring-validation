@@ -1,9 +1,7 @@
 package keyboard.works.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -16,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import keyboard.works.entity.User;
 import keyboard.works.entity.request.UserRequest;
 import keyboard.works.entity.response.GenericResponse;
-import keyboard.works.entity.response.UserReponse;
+import keyboard.works.entity.response.UserResponse;
 import keyboard.works.entity.validation.group.CreateData;
 import keyboard.works.entity.validation.group.UpdateData;
 import keyboard.works.service.UserService;
-import keyboard.works.utils.ResponseHelper;
+import keyboard.works.utils.GenericResponseHelper;
 
 @RestController
 @RequestMapping(
@@ -36,51 +33,24 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping
-	public GenericResponse<List<UserReponse>> getUsers() {
-		
-		List<UserReponse> list = userService.getUsers().stream()
-				.map(user -> {
-					UserReponse userReponse = new UserReponse();
-					BeanUtils.copyProperties(user, userReponse);
-					return userReponse;
-				})
-				.collect(Collectors.toList());
-		
-		return ResponseHelper.ok(list);
+	public GenericResponse<List<UserResponse>> getUsers() {
+		return GenericResponseHelper.ok(userService.getUsers());
 	}
 	
 	@GetMapping(path = "{id}")
-	public GenericResponse<UserReponse> getUser(@PathVariable("id") String id) {
-		
-		User user = userService.getUser(id);
-		UserReponse userReponse = new UserReponse();
-		
-		BeanUtils.copyProperties(user, userReponse);
-		
-		return ResponseHelper.ok(userReponse);
+	public GenericResponse<UserResponse> getUser(@PathVariable("id") String id) {
+		return GenericResponseHelper.ok(userService.getUser(id));
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public GenericResponse<UserReponse> createUser(@Validated(CreateData.class) @RequestBody UserRequest userRequest) {
-		
-		User user = userService.createUser(userRequest);
-		UserReponse userReponse = new UserReponse();
-		
-		BeanUtils.copyProperties(user, userReponse);
-		
-		return ResponseHelper.ok(userReponse);
+	public GenericResponse<UserResponse> createUser(@Validated(CreateData.class) @RequestBody UserRequest userRequest) {
+		return GenericResponseHelper.ok(userService.createUser(userRequest));
 		
 	}
 	
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public GenericResponse<UserReponse> updateUser(@PathVariable("id")String id, @Validated(UpdateData.class) @RequestBody UserRequest userRequest) {
-		
-		User user = userService.updateUser(id, userRequest);
-		UserReponse userReponse = new UserReponse();
-		
-		BeanUtils.copyProperties(user, userReponse);
-		
-		return ResponseHelper.ok(userReponse);
+	public GenericResponse<UserResponse> updateUser(@PathVariable("id")String id, @Validated(UpdateData.class) @RequestBody UserRequest userRequest) {
+		return GenericResponseHelper.ok(userService.updateUser(id, userRequest));
 		
 	}
 	
@@ -89,7 +59,7 @@ public class UserController {
 		
 		userService.deleteUser(id);
 		
-		return ResponseHelper.ok();
+		return GenericResponseHelper.ok();
 	}
 	
 }

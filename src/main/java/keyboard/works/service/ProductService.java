@@ -2,18 +2,18 @@ package keyboard.works.service;
 
 import java.util.List;
 
-import keyboard.works.entity.Product;
 import keyboard.works.entity.request.ProductRequest;
+import keyboard.works.entity.response.ProductResponse;
 
 public interface ProductService {
 
-	List<Product> getProducts();
+	List<ProductResponse> getProducts();
 	
-	Product getProduct(String id);
+	ProductResponse getProduct(String id);
 	
-	Product createProduct(ProductRequest productRequest);
+	ProductResponse createProduct(ProductRequest productRequest);
 	
-	Product updateProduct(String id, ProductRequest productRequest);
+	ProductResponse updateProduct(String id, ProductRequest productRequest);
 	
 	void deleteProduct(String id);
 	

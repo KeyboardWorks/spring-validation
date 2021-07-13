@@ -1,9 +1,7 @@
 package keyboard.works.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -16,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import keyboard.works.entity.Product;
 import keyboard.works.entity.request.ProductRequest;
 import keyboard.works.entity.response.GenericResponse;
 import keyboard.works.entity.response.ProductResponse;
 import keyboard.works.service.ProductService;
-import keyboard.works.utils.ResponseHelper;
+import keyboard.works.utils.GenericResponseHelper;
 
 @RestController
 @RequestMapping(
@@ -35,59 +32,29 @@ public class ProductController {
 	
 	@GetMapping
 	public GenericResponse<List<ProductResponse>> getProducts() {
-		
-		List<ProductResponse> list = productService.getProducts().stream()
-				.map(product -> {
-					ProductResponse productResponse = new ProductResponse();
-					BeanUtils.copyProperties(product, productResponse);
-					return productResponse;
-				})
-				.collect(Collectors.toList());
-		
-		return ResponseHelper.ok(list);
+		return GenericResponseHelper.ok(productService.getProducts());
 	}
 	
 	@GetMapping(path = "{id}")
 	public GenericResponse<ProductResponse> getProduct(@PathVariable("id") String id) {
-		
-		Product product = productService.getProduct(id);
-		ProductResponse productResponse = new ProductResponse();
-		
-		BeanUtils.copyProperties(product, productResponse);
-		
-		return ResponseHelper.ok(productResponse);
+		return GenericResponseHelper.ok(productService.getProduct(id));
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public GenericResponse<ProductResponse> createUser(@Validated @RequestBody ProductRequest productRequest) {
-		
-		Product product = productService.createProduct(productRequest);
-		ProductResponse productResponse = new ProductResponse();
-		
-		BeanUtils.copyProperties(product, productResponse);
-		
-		return ResponseHelper.ok(productResponse);
-		
+		return GenericResponseHelper.ok(productService.createProduct(productRequest));
 	}
 	
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public GenericResponse<ProductResponse> updateUser(@PathVariable("id")String id, @Validated @RequestBody ProductRequest productRequest) {
-		
-		Product product = productService.updateProduct(id, productRequest);
-		ProductResponse productResponse = new ProductResponse();
-		
-		BeanUtils.copyProperties(product, productResponse);
-		
-		return ResponseHelper.ok(productResponse);
+		return GenericResponseHelper.ok(productService.updateProduct(id, productRequest));
 		
 	}
 	
 	@DeleteMapping(path = "{id}")
 	public GenericResponse<?> deleteUser(@PathVariable("id")String id) {
-		
 		productService.deleteProduct(id);
-		
-		return ResponseHelper.ok();
+		return GenericResponseHelper.ok();
 	}
 	
 }

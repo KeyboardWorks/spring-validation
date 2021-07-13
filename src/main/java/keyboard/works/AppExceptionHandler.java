@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import keyboard.works.entity.response.GenericResponse;
-import keyboard.works.utils.ResponseHelper;
+import keyboard.works.utils.GenericResponseHelper;
 
 @RestControllerAdvice
 public class AppExceptionHandler {
@@ -38,7 +38,7 @@ public class AppExceptionHandler {
 			errors.add(error);
 		}
 		
-		return ResponseHelper.badRequest(errors);
+		return GenericResponseHelper.badRequest(errors);
 	}
 	
 	
@@ -58,13 +58,13 @@ public class AppExceptionHandler {
 			errors.add(error);
 		}
 		
-		return ResponseHelper.badRequest(errors);
+		return GenericResponseHelper.badRequest(errors);
 	}
 
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public GenericResponse<?> handlerOtherExceptions(Exception exception, WebRequest webRequest) {
-		return ResponseHelper.internalServerError(exception.getMessage());
+		return GenericResponseHelper.internalServerError(exception.getMessage());
 	}
 	
 }
